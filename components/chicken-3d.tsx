@@ -5,11 +5,11 @@ import { useFrame } from "@react-three/fiber"
 import { useGLTF } from "@react-three/drei"
 import * as THREE from "three"
 
-export function Chicken3D({ isOnFire, clickCount }: { isOnFire: boolean, clickCount: number }) {
+// Exporting the renamed function
+export function Bwak3D({ isOnFire, bwakCount }: { isOnFire: boolean, bwakCount: number }) {
   const groupRef = useRef<THREE.Group>(null)
   const { scene } = useGLTF("/midgefunny.glb")
 
-  // FIX: Setup materials ONCE to stop the "dimming" loop
   useMemo(() => {
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
@@ -24,25 +24,22 @@ export function Chicken3D({ isOnFire, clickCount }: { isOnFire: boolean, clickCo
     })
   }, [scene])
 
-  // FIX: Separate the glow logic from the renderer update
   useFrame(() => {
     if (!groupRef.current) return
     groupRef.current.rotation.y += 0.01
-
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const material = (child as THREE.Mesh).material as THREE.MeshStandardMaterial
-        // Force high-intensity glow
         material.emissive.set(isOnFire ? "#ff4400" : "#000000")
         material.emissiveIntensity = isOnFire ? 15.0 : 0
       }
     })
   })
 
-  return <primitive ref={groupRef} object={scene} scale={[3, 3, 3]} />
+  return <primitive ref={groupRef} object={scene} scale={[5, 5, 5]} />
 }
 
-export function FireParticles({ isOnFire }: { isOnFire: boolean }) {
+export function FireParticles({ isOnFire }: { isOnFire: boolean, bwakCount: number }) {
   const particles = useRef<THREE.Points>(null)
   const count = 100
   
