@@ -1,26 +1,14 @@
 "use client"
 
-export function ComboSystem({ combo, maxCombo, isOnFire, onBwak }: { 
-  combo: number, 
-  maxCombo: number, 
-  isOnFire: boolean, 
-  onBwak: () => void 
-}) {
+export function ComboSystem({ combo, maxCombo, isOnFire, onBwak }: any) {
   return (
-    <div className="w-full flex flex-col items-center gap-2">
-      <div className="w-64 h-4 bg-gray-800 rounded-full overflow-hidden border border-orange-900">
-        <div 
-          className={`h-full transition-all duration-100 ${isOnFire ? "bg-red-500 animate-pulse" : "bg-orange-500"}`}
-          style={{ width: `${(combo / maxCombo) * 100}%` }}
-        />
+    <div className="w-full flex flex-col items-center gap-4">
+      <div className="text-4xl font-black text-yellow-400 uppercase tracking-widest">
+        {combo > 20 ? "BWAK MODE ACTIVATED" : "Bwak Meter"}
       </div>
       <button 
         onClick={onBwak}
-        className={`px-12 py-6 text-2xl font-black uppercase rounded-lg border-2 transition-all ${
-          isOnFire 
-            ? "bg-red-700 border-red-500 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)]" 
-            : "bg-orange-600 border-orange-400 text-black hover:bg-orange-500"
-        }`}
+        className="text-6xl p-10 bg-gradient-to-r from-yellow-500 to-red-500 rounded-2xl hover:scale-110 transition-transform active:rotate-12"
       >
         BWAK!
       </button>

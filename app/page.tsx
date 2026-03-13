@@ -12,6 +12,7 @@ export default function ChickenWorship() {
   const [bwakCount, setBwakCount] = useState(0)
   const [combo, setCombo] = useState(0)
   const [isOnFire, setIsOnFire] = useState(false)
+  const [overload, setOverload] = useState(false)
   
   const decayTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const decayIntervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -32,8 +33,8 @@ export default function ChickenWorship() {
     setBwakCount(newGlobal)
     
     if (newCombo >= COMBO_THRESHOLD) setIsOnFire(true)
+    if (newGlobal >= 300) setOverload(true)
 
-    // Sync to Supabase
     await supabase.from("stats").update({ clicks: newGlobal }).eq("id", 1)
 
     if (decayTimeoutRef.current) clearTimeout(decayTimeoutRef.current)
@@ -51,7 +52,9 @@ export default function ChickenWorship() {
   }
 
   return (
-    <main className="w-full h-screen bg-black text-white p-4 flex flex-col items-center justify-between">
+    <main className={`w-full h-screen bg-black text-white p-4 flex flex-col items-center justify-between ${overload ? 'animate-pulse' : ''}`}>
+      {overload && <div className="absolute inset-0 flex items-center justify-center text-red-500 text-9xl font-black animate-bounce z-50 pointer-events-none">BWAK OVERLOAD</div>}
+      
       <header className="w-full flex justify-between items-center border-b border-orange-900 pb-4">
         <h1 className="text-3xl font-bold text-orange-500">THE BWAK CULT</h1>
         <div className="text-xl font-mono">Global Bwaks: {bwakCount}</div>
@@ -62,15 +65,7 @@ export default function ChickenWorship() {
       </div>
 
       <footer className="w-full">
-        <ComboSystem 
-          combo={combo} 
-          maxCombo={COMBO_THRESHOLD} 
-          isOnFire={isOnFire} 
-          onBwak={handleBwak} 
-        />
-        <div className="text-center text-sm text-gray-500 pt-4 italic">
-          Sacrifice your sanity for the bwak.
-        </div>
+        <ComboSystem combo={combo} maxCombo={COMBO_THRESHOLD} isOnFire={isOnFire} onBwak={handleBwak} />
       </footer>
     </main>
   )
