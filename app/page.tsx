@@ -33,10 +33,9 @@ export default function ChickenWorship() {
     
     if (newCombo >= COMBO_THRESHOLD) setIsOnFire(true)
 
-    // Save to database
+    // Sync to Supabase
     await supabase.from("stats").update({ clicks: newGlobal }).eq("id", 1)
 
-    // Decay logic
     if (decayTimeoutRef.current) clearTimeout(decayTimeoutRef.current)
     if (decayIntervalRef.current) clearInterval(decayIntervalRef.current)
 
@@ -52,21 +51,27 @@ export default function ChickenWorship() {
   }
 
   return (
-    <main className="w-full h-screen bg-black flex flex-col items-center justify-center">
-      <div className="absolute top-5 left-5 text-white font-mono text-2xl z-10">
-        Total Global Bwaks: {bwakCount}
-      </div>
-      
-      <div className="w-full h-[60vh]">
+    <main className="w-full h-screen bg-black text-white p-4 flex flex-col items-center justify-between">
+      <header className="w-full flex justify-between items-center border-b border-orange-900 pb-4">
+        <h1 className="text-3xl font-bold text-orange-500">THE BWAK CULT</h1>
+        <div className="text-xl font-mono">Global Bwaks: {bwakCount}</div>
+      </header>
+
+      <div className="w-full h-[60vh] relative">
         <ChickenScene isOnFire={isOnFire} bwakCount={bwakCount} />
       </div>
-      
-      <ComboSystem 
-        combo={combo} 
-        maxCombo={COMBO_THRESHOLD} 
-        isOnFire={isOnFire} 
-        onBwak={handleBwak} 
-      />
+
+      <footer className="w-full">
+        <ComboSystem 
+          combo={combo} 
+          maxCombo={COMBO_THRESHOLD} 
+          isOnFire={isOnFire} 
+          onBwak={handleBwak} 
+        />
+        <div className="text-center text-sm text-gray-500 pt-4 italic">
+          Sacrifice your sanity for the bwak.
+        </div>
+      </footer>
     </main>
   )
 }

@@ -38,7 +38,7 @@ export function Bwak3D({ isOnFire }: { isOnFire: boolean, bwakCount: number }) {
   return <primitive ref={groupRef} object={scene} scale={[5, 5, 5]} />
 }
 
-export function FireParticles({ isOnFire }: { isOnFire: boolean }) {
+export function FireParticles({ isOnFire }: { isOnFire: boolean, bwakCount: number }) {
   const particles = useRef<THREE.Points>(null)
   const count = 100
   

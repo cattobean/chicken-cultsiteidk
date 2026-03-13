@@ -7,11 +7,11 @@ import { Bwak3D, FireParticles } from "./chicken-3d"
 
 export function ChickenScene({ isOnFire, bwakCount }: { isOnFire: boolean, bwakCount: number }) {
   return (
-    <Canvas camera={{ position: [0, 0, 10] }}>
+    <Canvas className="bg-black" camera={{ position: [0, 0, 10] }}>
       <ambientLight intensity={2.0} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <Bwak3D isOnFire={isOnFire} bwakCount={bwakCount} />
-      <FireParticles isOnFire={isOnFire} />
+      <FireParticles isOnFire={isOnFire} bwakCount={bwakCount} />
       <OrbitControls enableZoom={false} />
       <Stars />
       <EffectComposer>
