@@ -11,7 +11,7 @@ export function ChickenScene({ isOnFire, bwakCount }: { isOnFire: boolean, bwakC
       <ambientLight intensity={2.0} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <Bwak3D isOnFire={isOnFire} bwakCount={bwakCount} />
-      <FireParticles isOnFire={isOnFire} bwakCount={bwakCount} />
+      <FireParticles isOnFire={isOnFire} />
       <OrbitControls enableZoom={false} />
       <Stars />
       <EffectComposer>

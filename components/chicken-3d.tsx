@@ -5,8 +5,7 @@ import { useFrame } from "@react-three/fiber"
 import { useGLTF } from "@react-three/drei"
 import * as THREE from "three"
 
-// Exporting the renamed function
-export function Bwak3D({ isOnFire, bwakCount }: { isOnFire: boolean, bwakCount: number }) {
+export function Bwak3D({ isOnFire }: { isOnFire: boolean, bwakCount: number }) {
   const groupRef = useRef<THREE.Group>(null)
   const { scene } = useGLTF("/midgefunny.glb")
 
@@ -39,7 +38,7 @@ export function Bwak3D({ isOnFire, bwakCount }: { isOnFire: boolean, bwakCount: 
   return <primitive ref={groupRef} object={scene} scale={[5, 5, 5]} />
 }
 
-export function FireParticles({ isOnFire }: { isOnFire: boolean, bwakCount: number }) {
+export function FireParticles({ isOnFire }: { isOnFire: boolean }) {
   const particles = useRef<THREE.Points>(null)
   const count = 100
   

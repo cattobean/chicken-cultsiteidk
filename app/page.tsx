@@ -24,7 +24,7 @@ export default function ChickenWorship() {
     loadBwaks()
   }, [])
 
-  const handleBwak = () => {
+  const handleBwak = async () => {
     const newCombo = combo + 1
     const newGlobal = bwakCount + 1
     
@@ -33,8 +33,10 @@ export default function ChickenWorship() {
     
     if (newCombo >= COMBO_THRESHOLD) setIsOnFire(true)
 
-    supabase.from("stats").update({ clicks: newGlobal }).eq("id", 1)
+    // Save to database
+    await supabase.from("stats").update({ clicks: newGlobal }).eq("id", 1)
 
+    // Decay logic
     if (decayTimeoutRef.current) clearTimeout(decayTimeoutRef.current)
     if (decayIntervalRef.current) clearInterval(decayIntervalRef.current)
 
@@ -50,17 +52,21 @@ export default function ChickenWorship() {
   }
 
   return (
-    <main className="w-full h-screen bg-black">
-      <ChickenScene isOnFire={isOnFire} bwakCount={bwakCount} />
+    <main className="w-full h-screen bg-black flex flex-col items-center justify-center">
+      <div className="absolute top-5 left-5 text-white font-mono text-2xl z-10">
+        Total Global Bwaks: {bwakCount}
+      </div>
+      
+      <div className="w-full h-[60vh]">
+        <ChickenScene isOnFire={isOnFire} bwakCount={bwakCount} />
+      </div>
+      
       <ComboSystem 
         combo={combo} 
         maxCombo={COMBO_THRESHOLD} 
         isOnFire={isOnFire} 
         onBwak={handleBwak} 
       />
-      <div className="absolute top-5 left-5 text-white font-mono text-2xl z-10">
-        Global Bwaks: {bwakCount}
-      </div>
     </main>
   )
 }
